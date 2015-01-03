@@ -120,12 +120,10 @@ namespace finance
             {
                 double ret = 0,
                        dt = T/double(n),
-                       f  = exp(- r * dt),
+                       f  = exp(- (r) * dt),
                        u  = exp(vol * sqrt(dt)),
                        d  = 1.0/u,
-                       p  = (1.0/f - d) / (u - d);
-                       
-                So = So * exp(- y * T);
+                       p  = (exp((r - y) * dt) - d) / (u - d);
 
                 // allocate memory
                 double *prices = new double[n + 1];
@@ -154,9 +152,7 @@ namespace finance
                        f  = exp(- r * dt),
                        u  = exp(vol * sqrt(dt)),
                        d  = 1.0/u,
-                       p  = (1.0/f - d) / (u - d);
-                       
-                So = So * exp(- y * T);
+                       p  = (exp((r - y) * dt) - d) / (u - d);
 
                 // allocate memory
                 Column prices(n + 1);
@@ -185,12 +181,10 @@ namespace finance
             {
                 double ret = 0,
                        dt = T/double(n),
-                       f  = exp(- r * dt),
+                       f  = exp(- (r) * dt),
                        u  = exp(vol * sqrt(dt)),
                        d  = 1.0/u,
-                       p  = (1.0/f - d) / (u - d);
-                       
-                So = So * exp(- y * T);
+                       p  = (exp((r - y) * dt) - d) / (u - d);
 
                 // allocate memory
                 double *prices = new double[n + 1];
@@ -221,12 +215,10 @@ namespace finance
             {
                 double ret = 0,
                        dt = T/double(n),
-                       f  = exp(- r * dt),
+                       f  = exp(- (r) * dt),
                        u  = exp(vol * sqrt(dt)),
                        d  = 1.0/u,
-                       p  = (1.0/f - d) / (u - d);
-                       
-                So = So * exp(- y * T);
+                       p  = (exp((r - y) * dt) - d) / (u - d);
 
                 // allocate memory
                 double *prices = new double[n];
@@ -258,12 +250,10 @@ namespace finance
             {
                 double ret = 0,
                        dt = T/double(n),
-                       f  = exp(- (r )* dt),
+                       f  = exp(- (r)* dt),
                        u  = exp(vol * sqrt(dt)),
                        d  = 1.0/u,
-                       p  = (1.0/f - d) / (u - d);
-                       
-                So = So * exp(- y * (T - dt));
+                       p  = (exp((r - y) * dt) - d) / (u - d);
 
                 // allocate memory
                 double *prices = new double[n];
