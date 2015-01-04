@@ -1,30 +1,21 @@
-#include "Helpers.h"
+#include "Matrix.h"
 
-#include <cmath>
-
-namespace vanagandr
-{
-namespace math
-{
-
-// force specialization, else Eigen ask for a Matrix using Complex as type
-// or cast complex to double
-double log_double(double x)
-{
-    return log(x);
-}
+namespace vanagandr {
+namespace math {
 
 // assume data are from older to newer
 Matrix compute_returns(const Matrix& data)
 {
     int n = data.rows();
     Matrix ret = data.bottomRows(n - 1).cwiseQuotient(data.topRows(n - 1));
-    return ret.unaryExpr(std::ptr_fun(log_double));
+    return mlog(ret);
 }
 
 Matrix compute_covariance(const Matrix& data)
 {
     Matrix mean = data.colwise().mean();
+    // we cant use broadcasting
+    // some problem with mean not being a vector
     mean = (data - Matrix::Ones(data.rows(), 1) * mean);
     return (mean.transpose() * mean) / double(data.rows());
 }

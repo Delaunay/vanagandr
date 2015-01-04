@@ -1,9 +1,12 @@
 #include <gtest/gtest.h>
 
-#include "file_test.h"
-#include "varmin_test.h"
-#include "integration_test.h"
+
+//#include "linear_reg_test.h"
+//#include "file_test.h"
+//#include "varmin_test.h"
+//#include "integration_test.h"
 #include "option_test.h"
+//#include "matrix_test.h"
 
 #if __linux__
 

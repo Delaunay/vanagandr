@@ -24,7 +24,38 @@ TEST(Options, BlackMertonScholes)
                      2.2886484467167563);
 }
 
-TEST(Options, BinomialTree)
+
+TEST(Options, BinomialTreeNA_euro_std)
+{
+    Option<Put , European, BinomialTree>::price(So, K, vol, T, r, 1000, y);
+}
+
+TEST(Options, BinomialTreeNA_euro_eigen)
+{
+    Option<Put , European, BinomialTree>::price_vec(So, K, vol, T, r, 1000, y);
+}
+
+TEST(Options, BinomialTreeNA)
+{
+    Option<Put , American, BinomialTree>::price(So, K, vol, T, r, 1000, y);
+}
+
+TEST(Options, TrinomialTreeNA)
+{
+    Option<Put , American, TrinomialTree>::price(So, K, vol, T, r, 1000, y);
+}
+
+TEST(Options, BinomialTreeA)
+{
+    Option<Put , American, BinomialTree, Adjusted>::price(So, K, vol, T, r, 1000, y);
+}
+
+TEST(Options, TrinomialTreeA)
+{
+    Option<Put , American, TrinomialTree, Adjusted>::price(So, K, vol, T, r, 1000, y);
+}
+
+TEST(Options, Trees)
 {
     // test that every possibility works
     double eu_call_bi    = Option<Call, European, BinomialTree>::price(So, K, vol, T, r, 1000, y);

@@ -20,17 +20,19 @@ SET(GTEST_DIR "../../gtest/gtest")
 #===============================================================================
 
 # Sources
-aux_source_directory("${PROJECT_SOURCE_DIR}/file"    SRC_LIST)
-aux_source_directory("${PROJECT_SOURCE_DIR}/finance" SRC_LIST)
-aux_source_directory("${PROJECT_SOURCE_DIR}/math"    SRC_LIST)
-aux_source_directory("${PROJECT_SOURCE_DIR}/test"    SRC_LIST)
-aux_source_directory("${PROJECT_SOURCE_DIR}/future"  SRC_LIST)
+aux_source_directory("${PROJECT_SOURCE_DIR}/file"         SRC_LIST)
+aux_source_directory("${PROJECT_SOURCE_DIR}/finance"      SRC_LIST)
+aux_source_directory("${PROJECT_SOURCE_DIR}/math"         SRC_LIST)
+aux_source_directory("${PROJECT_SOURCE_DIR}/statistic"    SRC_LIST)
+aux_source_directory("${PROJECT_SOURCE_DIR}/test"         SRC_LIST)
+aux_source_directory("${PROJECT_SOURCE_DIR}/future"       SRC_LIST)
 aux_source_directory("${PROJECT_SOURCE_DIR}/future/plot"  SRC_LIST)
 
 # directories
 add_subdirectory("${PROJECT_SOURCE_DIR}/file")
 add_subdirectory("${PROJECT_SOURCE_DIR}/finance")
 add_subdirectory("${PROJECT_SOURCE_DIR}/math")
+add_subdirectory("${PROJECT_SOURCE_DIR}/statistic")
 add_subdirectory("${PROJECT_SOURCE_DIR}/test")
 
 # future new feature
@@ -49,6 +51,8 @@ add_library(gtest "${GTEST_DIR}/src/gtest-all.cc")
 #===============================================================================
 #           Compiling
 #===============================================================================
+
+add_library(vanagandr ${SRC_LIST})
 
 # link compiled libraries : including gtest
 link_directories(${PROJECT_BINARY_DIR})
