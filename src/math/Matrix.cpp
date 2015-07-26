@@ -20,18 +20,21 @@ Matrix compute_covariance(const Matrix& data)
     return (mean.transpose() * mean) / double(data.rows());
 }
 
-Matrix compute_correlation(const Matrix& cov)
+Matrix compute_correlation(const Matrix& cov, bool full)
 {
     //Matrix cov = compute_covariance(data);
     Matrix correl = Matrix::Zero(cov.rows(), cov.cols());
 
+    // compute only half
     for(int i = 1, n = cov.rows(); i < n; i++)
         for(int j = 0; j < i; j++)
             correl(i, j) = cov(i, j) / sqrt(cov(i, i) * cov(j, j));
 
-    correl = correl + correl.transpose().eval();
-    correl.diagonal() = Eigen::Diagonal<Matrix>::Ones(cov.rows(), 1);
+    // copy
+    if (full)
+        correl = correl + correl.transpose().eval();
 
+    correl.diagonal() = Eigen::Diagonal<Matrix>::Ones(cov.rows(), 1);
     return correl;
 }
 

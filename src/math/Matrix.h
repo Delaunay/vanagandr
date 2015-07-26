@@ -20,13 +20,14 @@ namespace math
 
 // compute correlation does not compute the covariance
 // compute covariance does not compute the returns
-// that way users will not ask to compute twice the samething useless they want to
+// Users will not ask to compute twice the same thing useless they want to
 
 // assume data are from older to newer
 Matrix compute_returns      (const Matrix& data_price);
 Matrix compute_covariance   (const Matrix& data_percentage);
-Matrix compute_correlation  (const Matrix& data_covariance);
+Matrix compute_correlation  (const Matrix& data_covariance, bool full=true);
 
+// Not useful
 namespace internal{
     template<typename T>
     T log_spec(T x)
@@ -44,6 +45,18 @@ namespace internal{
     T sqrt_spec(T x)
     {
         return sqrt(x);
+    }
+
+    template<typename T>
+    T sigmoid_spec(T x)
+    {
+        return 1.0 / (1.0 + exp(- x));
+    }
+
+    template<typename T>
+    T exp_spec(T x)
+    {
+        return exp(x);
     }
 
     template<typename Scalar, int RowsAt, int ColsAt>
@@ -93,7 +106,13 @@ namespace internal{
 template<typename T>
 Eigen::Matrix<T, -1, -1> mlog(const Eigen::Matrix<T, -1, -1>& x)
 {
-    return x.unaryExpr(std::ptr_fun(internal::log_spec<T>));
+    return x.array().log();//x.unaryExpr(std::ptr_fun(internal::log_spec<T>));
+}
+
+template<typename T>
+Eigen::Matrix<T, -1, -1> mexp(const Eigen::Matrix<T, -1, -1>& x)
+{
+    return x.unaryExpr(std::ptr_fun(internal::exp_spec<T>));
 }
 
 template<typename T>
@@ -108,6 +127,12 @@ Eigen::Matrix<T, -1, -1> msqrt(const Eigen::Matrix<T, -1, -1>& x)
     return x.cwiseSqrt();
 }
 
+template<typename T>
+Eigen::Matrix<T, -1, -1> msigmoid(const Eigen::Matrix<T, -1, -1>& x)
+{
+    return x.unaryExpr(std::ptr_fun(internal::sigmoid_spec<T>));
+}
+
 // a .* b
 template<typename T>
 Eigen::Matrix<T, -1, -1> product(const Eigen::Matrix<T, -1, -1>& a, const Eigen::Matrix<T, -1, -1>& b)
@@ -120,14 +145,6 @@ template<typename T>
 Eigen::Matrix<T, -1, -1> quotient(const Eigen::Matrix<T, -1, -1>& a, const Eigen::Matrix<T, -1, -1>& b)
 {
     return a.cwiseQuotient(b);
-}
-
-// broadcast scalar into matrix
-// A + 1 => add(A, 1)
-template<typename T>
-Eigen::Matrix<T, -1, -1> add(const Eigen::Matrix<T, -1, -1>& a, T b)
-{
-    return a + b * Eigen::Matrix<T, -1, -1>::Ones(a.rows, a.cols());
 }
 
 // makes a copy

@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 
-#include "../statistic/LinearRegression.h"
+#include "../statistics/LinearRegression.h"
 
 using namespace vanagandr::statistics;
 
@@ -127,34 +127,39 @@ TEST(LinearRegression, JacobiSVD_perf)
 }
 
 Matrix ArY = Matrix::Zero(15, 1);
+Matrix ArU = Matrix::Random(15, 2);
 
-//TEST(AR, init_ar)
-//{
-//    ArY << 1.02442739,
-//           0.704533995,
-//           0.602597564,
-//           0.4695702,
-//           0.428023161,
-//           0.375716492,
-//           0.298413347,
-//           0.278349434,
-//           0.275355042,
-//           0.27626409,
-//           0.306151471,
-//           0.340888208,
-//           0.284204849,
-//           0.334586509,
-//           0.334628776;
-//}
+TEST(AR, init_ar)
+{
+    ArY << 1.02442739,
+           0.704533995,
+           0.602597564,
+           0.4695702,
+           0.428023161,
+           0.375716492,
+           0.298413347,
+           0.278349434,
+           0.275355042,
+           0.27626409,
+           0.306151471,
+           0.340888208,
+           0.284204849,
+           0.334586509,
+           0.334628776;
+}
 
-//TEST(AR, NormalEquation)
-//{
-//    std::cout << LinearRegression<NormalEquation>::auto_regress(ArY, 3) << std::endl;
-//}
+TEST(AR, NormalEquation)
+{
+    std::cout << ar_matrix(ArY, 3, ArU) << "\n\n";
 
-//TEST(AR, JacobiSVD)
-//{
-//    std::cout << LinearRegression<JacobiSVD>::auto_regress(ArY, 3) << std::endl;
-//}
+    std::cout << LinearRegression<NormalEquation>::auto_regress(ArY, 3) << "\n\n";
+    std::cout << LinearRegression<NormalEquation>::auto_regress(ArY, 3, ArU) << std::endl;
+}
+
+TEST(AR, JacobiSVD)
+{
+    std::cout << LinearRegression<JacobiSVD>::auto_regress(ArY, 3) << "\n\n";
+    std::cout << LinearRegression<NormalEquation>::auto_regress(ArY, 3, ArU) << std::endl;
+}
 
 #endif

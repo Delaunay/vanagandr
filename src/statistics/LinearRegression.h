@@ -2,6 +2,7 @@
 #define VANAGANDR_STATISTIC_LINEARREG_HEADER
 
 #include "../enum.h"
+// #define CERES_SOLVER
 
 // TODO add Regularization and Robust option
 // add Ceres SOlver
@@ -32,6 +33,7 @@ namespace statistics
     Matrix lag_op(const Matrix& Y, int lag);
 
 
+    // need to review this piece of code
     /*!
      * \brief ar_matrix return the matrix X used to compute the ols estimate of an AR model
      * with p lags. if Y is a matrix then each columns has the same treatment. a column of 1 is
@@ -41,6 +43,7 @@ namespace statistics
      * \return
      */
     Matrix ar_matrix(const Matrix& Y, int p);
+    Matrix ar_matrix(const Matrix& Y, int p, const Matrix& u);
 
     Matrix estimator_variance(const Matrix& X, const Matrix& res);
 
@@ -74,6 +77,10 @@ namespace statistics
         {
             return linear_regression(ar_matrix(Y, p), Y.bottomRows(Y.rows() - p));
         }
+        static Matrix auto_regress(const Matrix& Y, int p, const Matrix& U)
+        {
+            return linear_regression(ar_matrix(Y, p, U), Y.bottomRows(Y.rows() - p));
+        }
     };
 
     template<>
@@ -96,6 +103,10 @@ namespace statistics
         {
             return linear_regression(ar_matrix(Y, p), Y.bottomRows(Y.rows() - p));
         }
+        static Matrix auto_regress(const Matrix& Y, int p, const Matrix& U)
+        {
+            return linear_regression(ar_matrix(Y, p, U), Y.bottomRows(Y.rows() - p));
+        }
     };
 
 #if CERES_SOLVER
@@ -112,7 +123,7 @@ namespace statistics
          */
         static Matrix linear_regression(const Matrix& X, const Matrix& Y)
         {
-            return (X.transpose() * X).ldlt().solve(X.transpose() * Y);
+
         }
 
         static Matrix auto_regress(const Matrix& Y, int p)

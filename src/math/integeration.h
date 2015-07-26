@@ -21,7 +21,7 @@ namespace math
         double w2(int i, int n) { return sin(i * PI / pow((n + 1.0), 2.0)) * PI / (n + 1.0); }
     }
     
-    enum Method
+    enum IntegrationMethod
     {
         Rectangle,
         Trapezoidal,
@@ -45,7 +45,7 @@ namespace math
      * - Integrate<GaussChebyshev1>::integrate  | I don't think the function will be of any use.
      *              [ weights are computed in real time]
      */
-    template<Method method = Simpson>
+    template<IntegrationMethod method = Simpson>
     struct Integrate
     {
     public:

@@ -1,4 +1,5 @@
 #include "LinearRegression.h"
+#include "../error/Error.h"
 #include <cmath>
 
 namespace vanagandr
@@ -38,6 +39,24 @@ Matrix ar_matrix(const Matrix& Y, int p)
 
     for(int i = 0; i < p; i++)
         ret.block(0, i * Y.cols() + 1, rows, Y.cols()) = Y.middleRows(p - i - 1, rows);
+
+    return ret;
+}
+
+Matrix ar_matrix(const Matrix& Y, int p, const Matrix &u)
+{
+    // rows are cut by p
+    // the matrix becomes |1| Y t - 1 | ... | Y t - p|
+    int rows = Y.rows() - p;
+    VTHROW(u.rows() < rows, std::domain_error, "Matrix size mismatch");
+
+    Matrix ret = Matrix::Ones(rows, p * Y.cols() + 1 + u.cols());
+
+    int i = 0;
+    for(; i < p; i++)
+        ret.block(0, i * Y.cols() + 1, rows, Y.cols()) = Y.middleRows(p - i - 1, rows);
+
+    ret.block(0, i * Y.cols() + 1, rows, u.cols()) = u.topRows(rows);
 
     return ret;
 }

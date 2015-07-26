@@ -1,0 +1,29 @@
+
+/*!
+	@class vanagandr::Markowitz
+    @brief The Markowitz class allow you to compute the efficient frontier of Markowitz and the
+	optimal weight of each asset in order to minimize the variance of a portfolio of multiple assets.
+
+	@class vanagandr::Markowitz
+	The Markowitz class introduce the notion of "Markowitz::World" which define what you wish to compute. There are
+	3 basics world available.
+
+	@list
+		@li MinimalVariance :The function will return the minimal variance portfolio without taking into account the
+		specified return asked by the user.
+		
+		@li NoRiskFreeRate : The function will return the composition of the minimal variance portfolio 
+		having the specified return without taking into account the risk free rate specified.
+		
+		@li BorrowRiskFree : function will return the composition of the minimal variance portfolio 
+		having the specified return.The portfolio will be on the Capital allocation Line (CAL).
+		(The specified risk free rate will be used to compute the portfolio weight)
+		
+		@li BorrowSpecial : function will return the composition of the minimal variance portfolio 
+		having the specified return. The portfolio will be on the Capital allocation Line (CAL).
+		(The specified borrowing rate will be used to compute the portfolio weight)
+	@endlist
+	
+	@example MarkowitzExample.cpp 
+
+*/

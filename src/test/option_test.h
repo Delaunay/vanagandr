@@ -57,7 +57,7 @@ TEST(Options, TrinomialTreeA)
 
 TEST(Options, Trees)
 {
-    // test that every possibility works
+    // test if every possibility works
     double eu_call_bi    = Option<Call, European, BinomialTree>::price(So, K, vol, T, r, 1000, y);
     double eu_put_bi     = Option<Put , European, BinomialTree>::price(So, K, vol, T, r, 1000, y);
     double eu_call_bi_ad = Option<Call, European, BinomialTree, Adjusted>::price(So, K, vol, T, r, 1000, y);
