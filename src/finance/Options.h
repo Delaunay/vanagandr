@@ -1,7 +1,7 @@
 /*******************************************************************************
  *
  *  @autor Pierre Delaunay
- *    
+ *
  *
  *
  ******************************************************************************/
@@ -15,9 +15,6 @@
 #include <eigen3/Eigen/Dense>
 
 #include "../math/Matrix.h"
-
-typedef Eigen::MatrixXd Matrix;
-typedef Eigen::VectorXd Column;
 
 // Eigen::Column || std::vector have similar perf
 
@@ -58,11 +55,11 @@ namespace finance
         NotAdjusted,
         BlackScholesAdjust,
         Adjusted = BlackScholesAdjust,
-          
+
     };
 
     boost::math::normal_distribution<> normal_standard;
-    
+
     template<typename OptionClassType = Call>
     class BlackMertonScholes
     {
@@ -117,7 +114,7 @@ namespace finance
             }
     };
 
-    // American Binomial Tree 
+    // American Binomial Tree
     template<typename OptionClassType>
     class Option<OptionClassType, American, BinomialTree, NotAdjusted>
     {
@@ -148,7 +145,7 @@ namespace finance
             }
     };
 
-    // European Binomial Tree 
+    // European Binomial Tree
     template<typename OptionClassType>
     class Option<OptionClassType, European, BinomialTree, NotAdjusted>
     {
@@ -177,28 +174,6 @@ namespace finance
                 return prices[0];
             }
 
-            // vectorized version not particulary faster
-            static double price_vec(double So, double K, double vol, double T, double r, int n, double y = 0)
-            {
-                double dt = T/double(n),
-                       f  = exp(- r * dt),
-                       u  = exp(vol * sqrt(dt)),
-                       d  = 1.0/u,
-                       p  = (exp((r - y) * dt) - d) / (u - d);
-
-                // allocate memory
-                Column prices(n + 1),
-                       uv = Column::LinSpaced(Eigen::Sequential, n + 1, n, -n);
-
-                // generate prices
-                prices =  OptionClassType::payoff(So * vanagandr::math::mpow(u, uv), K);
-
-                for(int i = n - 1; i >= 0; i--)
-                    prices.middleRows(0, i + 1) = (prices.middleRows(0, i + 1) * p + prices.middleRows(1, i + 1) * (1 - p)) * f;
-
-                std::cout << prices << std::endl;
-                return prices(0);
-            }
     };
 
     // European Binomial Tree Ajusted
@@ -284,7 +259,7 @@ namespace finance
                        q1 = (m * d - M * (m + d) + V)/((u - d) * (u - m)),
                        q2 = (M * (u + d) - u * d - V)/((u - m) * (m - d)),
                        q3 = (u * m - M * (u + m) + V)/((u - d) * (m - d));
-                       
+
                 // allocate memory
                 n = n - 1;
                 int g = 2 * n + 1;
@@ -360,7 +335,7 @@ namespace finance
                        q1 = (m * d - M * (m + d) + V)/((u - d) * (u - m)),
                        q2 = (M * (u + d) - u * d - V)/((u - m) * (m - d)),
                        q3 = (u * m - M * (u + m) + V)/((u - d) * (m - d));
-                       
+
                 // allocate memory
                 n = n - 1;
                 int g = 2 * n + 1;
@@ -400,7 +375,7 @@ namespace finance
                        q1 = (m * d - M * (m + d) + V)/((u - d) * (u - m)),
                        q2 = (M * (u + d) - u * d - V)/((u - m) * (m - d)),
                        q3 = (u * m - M * (u + m) + V)/((u - d) * (m - d));
-                       
+
                 // allocate memory
                 int g = 2 * n + 1;
                 Column prices(2 * n + 1);

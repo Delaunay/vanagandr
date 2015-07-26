@@ -4,7 +4,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
 
-
 #include "../containers/Type.h"
 
 using namespace vanagandr::type;
@@ -28,5 +27,18 @@ TEST(Date, Datetype)
     EXPECT_EQ(d1 < d2, true);
 
 }
+
+#if __linux__
+
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+
+    return 0;
+}
+
+#endif
+
 
 #endif

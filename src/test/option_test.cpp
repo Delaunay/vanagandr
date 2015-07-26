@@ -4,7 +4,6 @@
 #include <gtest/gtest.h>
 
 #include "../finance/Options.h"
-#include "integration_test.h"
 
 using namespace vanagandr::finance;
 
@@ -28,11 +27,6 @@ TEST(Options, BlackMertonScholes)
 TEST(Options, BinomialTreeNA_euro_std)
 {
     Option<Put , European, BinomialTree>::price(So, K, vol, T, r, 1000, y);
-}
-
-TEST(Options, BinomialTreeNA_euro_eigen)
-{
-    Option<Put , European, BinomialTree>::price_vec(So, K, vol, T, r, 1000, y);
 }
 
 TEST(Options, BinomialTreeNA)
@@ -88,5 +82,16 @@ TEST(Options, Trees)
     std::cout << "[          ] \t" << "AM Put  B: " << am_put_bi  << "\t" << am_put_bi_ad  << std::endl;
     std::cout << "[          ] \t" << "AM Put  T: " << am_put_ti  << "\t" << am_put_ti_ad  << std::endl;
 }
+#if __linux__
+
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+
+    return 0;
+}
+
+#endif
 
 #endif

@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 
-#include "../statistic/LogisticRegression.h"
+#include "../statistics/LogisticRegression.h"
 #include "../file/MatrixIO.h"
 
 using namespace vanagandr::statistics;
@@ -61,5 +61,17 @@ TEST(LogisticRegression, GradientDescent)
      std::cout << t<< std::endl;
      std::cout << LogisticRegression::cost(t, X, Y) << std::endl;
 }
+#if __linux__
+
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+
+    return 0;
+}
+
+
+#endif
 
 #endif

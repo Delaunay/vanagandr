@@ -53,5 +53,17 @@ TEST(MatrixFunction, mpow)
         for(int j = 0; j < xl.rows(); j++)
             EXPECT_DOUBLE_EQ(xl(j, i), pow(mf(j, i), ex(j, i)));
 }
+#if __linux__
+
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+
+    return 0;
+}
+
+
+#endif
 
 #endif

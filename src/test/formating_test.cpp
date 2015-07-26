@@ -25,6 +25,18 @@ TEST(Formating, All)
     Formating<double>::align_center(std::cout, 12.12, 20, '_');
 }
 
+#if __linux__
+
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+
+    return 0;
+}
+
+
+#endif
 
 
 #endif

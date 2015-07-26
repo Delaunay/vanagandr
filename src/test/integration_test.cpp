@@ -77,4 +77,17 @@ TEST(Integrate, GaussChebyshev1)
 //    EXPECT_DOUBLE_EQ(Integrate<GaussChebyshev2>::integrate(f1,  a,  b, 1000), F1(b) - F1(a));
 //    EXPECT_DOUBLE_EQ(Integrate<GaussChebyshev2>::integrate(f2, -20, 0, 1000), 0.5);
 //}
+#if __linux__
+
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+
+    return 0;
+}
+
+
+#endif
+
 #endif

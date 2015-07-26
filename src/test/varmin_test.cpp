@@ -109,5 +109,17 @@ TEST(variance_min, risk_free_tr_matrix)
     EXPECT_DOUBLE_EQ(w(3, 1), 1.8341961799756578e-22);  // lagrangian w = 1
     EXPECT_DOUBLE_EQ(w(4, 1), 0.0076805708712214182);   // lagrangian E(r) = tr
 }
+#if __linux__
+
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+
+    return 0;
+}
+
+
+#endif
 
 #endif
