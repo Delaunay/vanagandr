@@ -7,6 +7,8 @@
 
 #include "../enum.h"
 
+// TODO rewrite it with a std::vector => Eigen::Map => Eigen::Matrix/Array
+
 namespace vanagandr
 {
 namespace file

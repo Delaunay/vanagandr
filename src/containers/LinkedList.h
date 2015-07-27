@@ -48,7 +48,7 @@ class LinkedList
 protected:
     struct Node
     {
-        Node(Element el, Node* n = NULL, Node* p = NULL):
+        Node(Element el, Node* n = nullptr, Node* p = nullptr):
             element(el), next(n), prev(p)
         {}
 
@@ -83,7 +83,7 @@ public:
             _position->prev = new Node(el, _position, prev);
         }
 
-        void     remove_element()
+        void remove_element()
         {
             Node* prev = _position->prev;
             prev->next = _position->next;
@@ -204,7 +204,8 @@ public:
 
         s += "] \n        (size: " + std::to_string(_size) +
               ", memory: (Node: "  + pretty_print_capacity(sizeof(Node)) + ", Total: "
-                                   + pretty_print_capacity(sizeof(Node) * _size) + "))";
+                                   + pretty_print_capacity(sizeof(Node) * _size)  +
+                /*", Overhead: " + pretty_print_capacity(sizeof(LinkedList<value_type>)) */+ "))";
 
         return s;
     }

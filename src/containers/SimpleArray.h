@@ -43,7 +43,20 @@ namespace containers
  *
  */
 
+#ifndef VANAGANDR_SIMPLEARRAY_GROW_POLICY
 #define VANAGANDR_SIMPLEARRAY_GROW_POLICY(old_cap) old_cap * 2
+#endif
+
+// Safe clause make SimpleArray correct wrong input
+#if VANAGANDR_SIMPLEARRAY_SAFE
+#   define SAFE_GETITEM(idx)    return _array[idx % size()]
+#   define SAFE_REMOVE()        if (_last == _array) return
+#   define SAFE_RESERVE(x, m)   x = std::max(x, m)
+#else
+#   define SAFE_GETITEM(idx)
+#   define SAFE_REMOVE()
+#   define SAFE_RESERVE(x, m)
+#endif
 
 template<typename Element>
 class SimpleArray
@@ -99,7 +112,8 @@ public:
 
     value_type& operator[] (const size_type& idx)
     {
-        VTHROW(idx > size(), std::domain_error, "Index out of bound");
+        SAFE_GETITEM(idx);
+        VTHROW(idx > size(), std::domain_error, " Index out of bound");
         return _array[idx];
     }
 
@@ -108,7 +122,8 @@ public:
 
     const value_type& operator[] (const size_type& idx) const
     {
-        VTHROW(idx > size(), std::domain_error, "Index out of bound");
+        SAFE_GETITEM(idx);
+        VTHROW(idx > size(), std::domain_error, " Index out of bound");
         return _array[idx];
     }
 
@@ -123,6 +138,7 @@ public:
     // Remove last
     void remove_last()
     {
+        SAFE_REMOVE();
         VTHROW(_last == _array, std::domain_error, " Cant remove last Element: Array is Empty");
         _allocator.destroy(_last--);
     }
@@ -155,7 +171,8 @@ public:
                 ", capacity: " + std::to_string(capacity()) +
                 ", memory:(Element: " + pretty_print_capacity(sizeof(value_type)) +
                            ", Used: " + pretty_print_capacity(sizeof(value_type) * size()) +
-                          ", Total: " + pretty_print_capacity(sizeof(value_type) * capacity()) + "))";
+                          ", Total: " + pretty_print_capacity(sizeof(value_type) * capacity()) +
+                       /*", Overhead: " + pretty_print_capacity(sizeof(SimpleArray<value_type>)) +*/ "))";
 
         return s;
     }
@@ -172,6 +189,7 @@ public:
 
     void           reserve(size_t n)
     {
+        SAFE_RESERVE(n, size());
         VTHROW(size() > n, std::domain_error, "Not enough reserved space to copy");
         reallocate_memory(n);
     }
@@ -188,7 +206,9 @@ protected:
 
     void reallocate_memory(size_t n, iterator beg, iterator end)
     {
-        VASSERT(end - beg < n && " Reallocation Error, Not enough space to copy");
+        // I thinking about del those two
+        // SAFE_RESERVE(n, end - beg);
+        // VASSERT(end - beg < n && " Reallocation Error, Not enough space to copy");
 
         value_type* new_array = _allocator.allocate(n);
 

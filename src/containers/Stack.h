@@ -24,11 +24,11 @@ public:
     typedef const Element& const_reference;
 
     void push(const_reference a)  {   return _linkedlist.push_first(a);      }
-    void pop()                    {   return _linkedlist.remove_first();        }
+    void pop()                    {   return _linkedlist.remove_first();     }
     std::string str() const       {   return _linkedlist.str();       }
     const size_type& size() const {   return _linkedlist.size();      }
 
-    bool            is_empty() const {   return _linkedlist.is_empty();  }
+    bool            is_empty() const {   return _linkedlist.is_empty(); }
     const_reference top() const      {   return _linkedlist.first();    }
     reference       top()            {   return _linkedlist.first();    }
 

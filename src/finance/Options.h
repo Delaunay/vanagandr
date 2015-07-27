@@ -25,15 +25,11 @@ namespace finance
     struct Call
     {
         static double payoff (const double& St, const double& K) { return std::max(St - K, 0.0); }
-        static Column payoff (const Column& St, const Column& K) { return Column::Zero(St.rows(), 1).cwiseMax(St- K); }
-        static Column payoff (const Column& St, const double& K) { return Column::Zero(St.rows(), 1).cwiseMax(St - K * Column::Ones(St.rows(), 1)); }
     };
 
     struct Put
     {
         static double payoff (const double& St, const double& K) { return std::max(K - St, 0.0); }
-        static Column payoff (const Column& St, const Column& K) { return Column::Zero(St.rows(), 1).cwiseMax(K - St); }
-        static Column payoff (const Column& St, const double& K) { return Column::Zero(St.rows(), 1).cwiseMax(K * Column::Ones(St.rows(), 1) - St); }
     };
 
     enum OptionType
@@ -131,13 +127,13 @@ namespace finance
                 Column prices(n + 1);
 
                 // generate the prices
-                for(int i = 0; i < n + 1; i++)
+                for(int i = 0; i < n + 1; ++i)
                     prices(i) = OptionClassType::payoff(So * pow(u, double(n - i * 2)), K);
 
                 // Columns
-                for(int i = n - 1; i >= 0; i--)
+                for(int i = n - 1; i >= 0; --i)
                     // Rows
-                    for(int j = 0; j <= i; j++)
+                    for(int j = 0; j <= i; ++j)
                         prices(j) = std::max((prices(j) * p + prices(j + 1) * (1 - p)) * f,
                         OptionClassType::payoff(So * pow(u, double(i - 2 * j)), K));
 
@@ -162,13 +158,13 @@ namespace finance
                 std::vector<double> prices(n + 1);
 
                 // generate the prices
-                for(int i = 0; i < n + 1; i++)
+                for(int i = 0; i < n + 1; ++i)
                     prices[i] = OptionClassType::payoff(So * pow(u, double(n - i * 2)), K);
 
                 // Columns
-                for(int i = n - 1; i >= 0; i--)
+                for(int i = n - 1; i >= 0; --i)
                     // Rows
-                    for(int j = 0; j <= i; j++)
+                    for(int j = 0; j <= i; ++j)
                         prices[j] = (prices[j] * p + prices[j + 1] * (1 - p)) * f;
 
                 return prices[0];
@@ -194,13 +190,13 @@ namespace finance
 
                 n = n - 1;
                 // generate the prices
-                for(int i = 0; i < n + 1; i++)
+                for(int i = 0; i < n + 1; ++i)
                     prices(i) = BlackMertonScholes<OptionClassType>::price(So * pow(u, double(n - i * 2)), K, vol, dt, r, y);
 
                 // Columns
-                for(int i = n - 1; i >= 0; i--)
+                for(int i = n - 1; i >= 0; --i)
                     // Rows
-                    for(int j = 0; j <= i; j++)
+                    for(int j = 0; j <= i; ++j)
                         prices(j) = (prices(j) * p + prices(j + 1) * (1 - p)) * f;
 
                 return prices(0);
@@ -226,14 +222,14 @@ namespace finance
                 n = n - 1;
 
                 // generate the prices
-                for(int i = 0; i < n + 1; i++)
+                for(int i = 0; i < n + 1; ++i)
                     prices(i) = std::max(BlackMertonScholes<OptionClassType>::price(So * pow(u, double(n - i * 2)), K, vol, dt, r, y),
                                          OptionClassType::payoff(So * pow(u, double(n - i * 2)), K));
 
                 // Columns
-                for(int i = n - 1; i >= 0; i--)
+                for(int i = n - 1; i >= 0; --i)
                     // Rows
-                    for(int j = 0; j <= i; j++)
+                    for(int j = 0; j <= i; ++j)
                         prices(j) = std::max((prices(j) * p + prices(j + 1) * (1 - p)) * f,
                         OptionClassType::payoff(So * pow(u, double(i - 2 * j)), K));
 
@@ -266,14 +262,14 @@ namespace finance
                 Column prices(2 * n + 1);
 
                 // generate the prices
-                for(int i = 0; i < g; i++)
+                for(int i = 0; i < g; ++i)
                     prices(i) = std::max(BlackMertonScholes<OptionClassType>::price(So * pow(u, double(n - i)) * pow(m, i), K, vol, dt, r, y),
                                          OptionClassType::payoff(So * pow(u, double(n - i)) * pow(m, i), K));
 
                 // Columns
-                for(int i = n - 1; i >= 0; i--)
+                for(int i = n - 1; i >= 0; --i)
                     // Rows
-                    for(int j = 0; j <= 2 * i; j++)
+                    for(int j = 0; j <= 2 * i; ++j)
                         prices(j) = (prices(j) * q1 + prices(j + 1) * q2 + prices(j + 2) * q3) * f;
 
                 return prices(0);
@@ -304,13 +300,13 @@ namespace finance
             Column prices(2 * n + 1);
 
             // generate the prices
-            for(int i = 0; i < g; i++)
+            for(int i = 0; i < g; ++i)
                 prices(i) = OptionClassType::payoff(So * pow(u, double(n - i)) * pow(m, i), K);
 
             // Columns
-            for(int i = n - 1; i >= 0; i--)
+            for(int i = n - 1; i >= 0; --i)
                 // Rows
-                for(int j = 0; j <= 2 * i; j++)
+                for(int j = 0; j <= 2 * i; ++j)
                     prices(j) = (prices(j) * q1 + prices(j + 1) * q2 + prices(j + 2) * q3) * f;
 
             return prices(0);
@@ -342,14 +338,14 @@ namespace finance
                 Column prices(2 * n + 1);
 
                 // generate the prices
-                for(int i = 0; i < g; i++)
+                for(int i = 0; i < g; ++i)
                     prices[i] = std::max(BlackMertonScholes<OptionClassType>::price(So * pow(u, double(n - i)) * pow(m, i), K, vol, dt, r, y),
                                          OptionClassType::payoff(So * pow(u, double(n - i)) * pow(m, i), K));
 
                 // Columns
-                for(int i = n - 1; i >= 0; i--)
+                for(int i = n - 1; i >= 0; --i)
                     // Rows
-                    for(int j = 0; j <= 2 * i; j++)
+                    for(int j = 0; j <= 2 * i; ++j)
                         prices(j) = std::max((prices(j) * q1 + prices(j + 1) * q2 + prices(j + 2) * q3) * f,
                         OptionClassType::payoff(So * pow(u, double(i - j)) * pow(m, j) , K));
 
@@ -381,13 +377,13 @@ namespace finance
                 Column prices(2 * n + 1);
 
                 // generate the prices
-                for(int i = 0; i < g; i++)
+                for(int i = 0; i < g; ++i)
                     prices(i) = OptionClassType::payoff(So * pow(u, double(n - i)) * pow(m, i), K);
 
                 // Columns
-                for(int i = n - 1; i >= 0; i--)
+                for(int i = n - 1; i >= 0; --i)
                     // Rows
-                    for(int j = 0; j <= 2 * i; j++)
+                    for(int j = 0; j <= 2 * i; ++j)
                         prices(j) = std::max((prices(j) * q1 + prices(j + 1) * q2 + prices(j + 2) * q3) * f,
                         OptionClassType::payoff(So * pow(u, double(i - j)) * pow(m, j) , K));
 
