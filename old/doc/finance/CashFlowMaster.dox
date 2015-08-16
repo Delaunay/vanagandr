@@ -1,8 +1,0 @@
-/*! 
-    @class vanagandr::CashFlowMaster
-    @brief Vector of Cash Flows (NPV) 
-	
-	@example CashFlowsExample1.cpp 
-	@example CashFlowsExample2.cpp
-	
-*/
