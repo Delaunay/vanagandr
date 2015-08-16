@@ -24,5 +24,6 @@ Makefile*
 *.save
 *.user
 
-/build/
+/build*/
 /doc/
+/old/
