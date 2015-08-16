@@ -2,6 +2,7 @@
 #define VANAGANDR_MEMORY_PTR_HEADER
 
 #include <memory>
+
 #include "../error/Error.h"
 
 namespace vanagandr{
@@ -15,7 +16,6 @@ T* clone(T* ptr)
 
 // Self managing pointer
 // Original Design from 'Accelerated C++' by Andrew Koenig and Babara E. Moo
-// Think it is more or less equivalent to C++11 std::shared_ptr
 template<class T>
 class Pointer
 {

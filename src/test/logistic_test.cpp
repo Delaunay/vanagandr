@@ -17,9 +17,9 @@ double rsqr;
 
 TEST(LogisticRegression, Initialization)
 {
-    X = vanagandr::file::read("../tests/x.csv");
-    Y = vanagandr::file::read("../tests/y.csv");
-    tb = vanagandr::file::read("../tests/theta.csv");
+    X = vanagandr::file::read("../data/x2.csv");
+    Y = vanagandr::file::read("../data/y2.csv");
+    tb = vanagandr::file::read("../data/theta.csv");
     theta = Matrix::Zero(3, 1);
 }
 

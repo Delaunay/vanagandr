@@ -3,6 +3,7 @@
 
 #include "ErrorConfig.h"
 //  Your app should not throw
+// TMP might be usuable
 
 // Throw has priority over <assert>
 #if VANAGANDR_NDEBUG

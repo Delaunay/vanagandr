@@ -19,7 +19,6 @@ SET(GTEST_DIR "../../gtest/gtest")
 
 # Sources
 aux_source_directory(file         SRC_LIST)
-aux_source_directory(AI           SRC_LIST)
 aux_source_directory(finance      SRC_LIST)
 aux_source_directory(math         SRC_LIST)
 aux_source_directory(statistics   SRC_LIST)
@@ -44,7 +43,6 @@ add_subdirectory(memory)
 add_subdirectory(future)
 add_subdirectory(future/plot)
 add_subdirectory(future/cryptography)
-add_subdirectory(AI)
 
 #include_directories("${PROJECT_SOURCE_DIR}/containers")
 
@@ -57,6 +55,7 @@ SET(HDRS_FILE
     containers/Stack.h
     containers/Type.h
     containers/LinkedList.h
+    containers/Vector2D.h
     containers/Capacity.h
     error/Error.h
     error/ErrorConfig.h
@@ -108,8 +107,8 @@ IF(BUILD_TESTING)
     VANAGANDR_TEST(solver1D)
     VANAGANDR_TEST(varmin)
     VANAGANDR_TEST(sort)
-    VANAGANDR_TEST(perceptron)
     VANAGANDR_TEST(formating)
     VANAGANDR_TEST(pointer)
+    VANAGANDR_TEST(vector2D)
 
 ENDIF(BUILD_TESTING)

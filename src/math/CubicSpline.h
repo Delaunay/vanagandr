@@ -6,7 +6,7 @@
 namespace vanagandr {
 
     // add vector equivalent
-
+    // not tested
     Column cubic_spline(const double* x,
                         const double* fx, unsigned int size,
                         const double* t, unsigned int n = 1)

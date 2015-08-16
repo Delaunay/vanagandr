@@ -1,0 +1,132 @@
+/*! 
+	
+	@class vanagandr::UniformRandom
+    @brief Generate a Pseudo random Number (PRN) between the specified interval according to the uniform distribution using the specified pseudo random number generator (PRNG). 
+	
+	@class vanagandr::UniformRandom
+	The default PRNG is the mersenne twister (mt19937). 
+
+	Vanagandr use Boost library implementation of PRNG.
+	
+	@fn UniformRandom::UniformRandom()
+	@param min  Minimal value of the random variable
+	@param max	Maximal value of the random variable
+	@param seed seed used to initialize the PRNG
+	
+	@fn vanagandr::UniformRandom::operator()()
+    @brief return a Pseudo Random Number
+	
+	@fn vanagandr::UniformRandom::generate()
+    @brief return a Pseudo Random Number 
+	
+	@fn vanagandr::UniformRandom::reset()
+    @brief reset the PRNG 
+	
+	
+	
+	@class vanagandr::NormalRandom
+    @brief Generate a Pseudo random Number (PRN) according to the normal distribution using the specified mean and standard deviation.
+
+	@class vanagandr::UniformRandom
+	By default, the normal random class use the mersenne twister (mt19937) as PRNG. Vanagandr use Boost library implementation of PRNG.
+	
+	@fn vanagandr::NormalRandom::NormalRandom()
+	@param mean  arithmetic average
+	@param vol	standard deviation
+	@param seed seed used to initialize the PRNG
+	
+	@fn vanagandr::NormalRandom::operator()()
+    @brief return a Pseudo Random Number
+	
+	@fn vanagandr::NormalRandom::generate()
+    @brief return a Pseudo Random Number 
+	
+	@fn vanagandr::NormalRandom::reset()
+    @brief reset the PRNG
+	
+	
+
+	@class vanagandr::LogNormalRandom
+    @brief Generate a Pseudo random Number (PRN) according to the log-normal distribution.
+
+	@class vanagandr::UniformRandom
+	By default, the log-normal random class use the mersenne twister (mt19937) as PRNG. Vanagandr use Boost library implementation of PRNG.
+	
+	@fn vanagandr::LogNormalRandom::LogNormalRandom()
+	@param mean  Not the Mean
+	@param vol	 Not the standard deviation
+	@param seed seed used to initialize the PRNG
+	
+	@fn vanagandr::LogNormalRandom::operator()()
+    @brief return a Pseudo Random Number
+	
+	@fn vanagandr::LogNormalRandom::generate()
+    @brief return a Pseudo Random Number 
+	
+	@fn vanagandr::LogNormalRandom::reset()
+    @brief reset the PRNG 
+	
+	
+	
+	@class vanagandr::GBrownianMPath
+    @brief The GBrownianMPath is used to simulate the full path of the price from t = 0 to t = T. 
+	
+	@class vanagandr::GBrownianMPath
+	A common example of the use of GBrownianMPath would be to calculate the value of an asian option.
+	Be careful, the past data are not saved ! Only the last generated price is available ! if you want to use past data you have to save them yourself.
+
+	@fn vanagandr::GBrownianMPath::GBrownianMPath()
+	@param So  	Current price of the underlying asset
+	@param Vol	expected annual standard deviation of the underlying asset price
+	@param dt	step of one generation (1/12 = 1 month)
+	@param R	expected return of the asset
+	@param seed seed used to initialize the PRNG
+	
+	@fn vanagandr::GBrownianMPath::operator()()
+    @brief return the price at t + 1
+	
+	@fn vanagandr::GBrownianMPath::price(double St)
+    @brief return the price at t + 1 using the given starting price
+	
+	@fn vanagandr::GBrownianMPath::price()
+    @brief alias of GBrownianMPath::operator()()
+	
+	@fn vanagandr::GBrownianMPath::resetS()
+    @brief restart a new path at So
+	
+	@fn vanagandr::GBrownianMPath::reset()
+    @brief restart a new path at So and reset the PRNG
+	
+	@fn vanagandr::GBrownianMPath::lastPrice()
+    @brief return the last price generated
+	
+	@fn vanagandr::GBrownianMPath::period()
+    @brief return the number of time a price has been generated ( dt * period() = time in year elapsed)
+	
+	
+	@class vanagandr::GBrownianMPoint
+    @brief GBrownianMPoint is used when you want to simulate n prices at a time T regardless of the price the asset took at T - 1. 
+	
+	@class vanagandr::GBrownianMPoint
+	A common example of the use of GBrownianMPoint would be to calculate the value of an european option.
+	
+	@fn vanagandr::GBrownianMPoint::GBrownianMPoint()
+	@param So  	Current price of the underlying asset
+	@param Vol	expected annual standard deviation of the underlying asset price
+	@param dt	step of one generation (1/12 = 1 month)
+	@param R	expected return of the asset
+	@param seed seed used to initialize the PRNG
+	
+	@fn vanagandr::GBrownianMPoint::operator()()
+    @brief return the price at t = T
+	
+	@fn vanagandr::GBrownianMPoint::price()
+    @brief alias of GBrownianMPath::operator()()
+	
+	@fn vanagandr::GBrownianMPoint::reset()
+    @brief reset the PRNG
+	
+	
+	@example BrownianMotionExample1.cpp 
+	@example BrownianMotionExample2.cpp
+*/

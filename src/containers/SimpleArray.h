@@ -41,6 +41,10 @@ namespace containers
  *
  *  * Amortized worst case is O(n)
  *
+ * TODO
+ * -------
+ *      * implement move operation
+ *
  */
 
 #ifndef VANAGANDR_SIMPLEARRAY_GROW_POLICY
@@ -68,6 +72,7 @@ public:
     typedef Element        value_type;
     typedef Element&       reference;
     typedef const Element& const_reference;
+    typedef std::ptrdiff_t ptr_diff;
 
     // Having a power of two as default value will make capacity look pretty =D
     // Memory is cheap. Allocate some memory by default
@@ -206,7 +211,7 @@ protected:
 
     void reallocate_memory(size_t n, iterator beg, iterator end)
     {
-        // I thinking about del those two
+        // I am thinking about del those two
         // SAFE_RESERVE(n, end - beg);
         // VASSERT(end - beg < n && " Reallocation Error, Not enough space to copy");
 
